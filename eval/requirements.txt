@@ -1,0 +1,2 @@
+# No external dependencies required.
+# All metrics and rubric scoring run with Python 3.10+ standard library.

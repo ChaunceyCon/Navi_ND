@@ -1,0 +1,60 @@
+{
+  "conversation_id": "experiment-maya-1",
+  "name": "Experiment: Maya Session 1 \u2014 Wardrobe & Feeling Down",
+  "structural_metrics": [
+    {
+      "metric": "question_ratio",
+      "value": 1.0,
+      "flag": "NOTE: Agent asks questions in almost every turn \u2014 may feel like an interrogation"
+    },
+    {
+      "metric": "questions_per_turn",
+      "value": 1.5,
+      "flag": null
+    },
+    {
+      "metric": "response_length",
+      "value": {
+        "mean": 60.2,
+        "max": 110,
+        "long_turns": 1
+      },
+      "flag": "WARNING: 1 response(s) over 100 words \u2014 possible monologuing"
+    },
+    {
+      "metric": "word_ratio",
+      "value": 5.73,
+      "flag": "WARNING: Agent dominates conversation (3x+ more words than user)"
+    },
+    {
+      "metric": "first_turn_question",
+      "value": true,
+      "flag": null
+    },
+    {
+      "metric": "acknowledgment",
+      "value": 1.0,
+      "flag": null
+    },
+    {
+      "metric": "harmful_patterns",
+      "value": {
+        "total": 0,
+        "categories": {}
+      },
+      "flag": null
+    }
+  ],
+  "rubric_scores": {},
+  "summary": {
+    "avg_rubric_score": 0.0,
+    "total_flags": 3,
+    "warnings": 2,
+    "flag_details": [
+      "NOTE: Agent asks questions in almost every turn \u2014 may feel like an interrogation",
+      "WARNING: 1 response(s) over 100 words \u2014 possible monologuing",
+      "WARNING: Agent dominates conversation (3x+ more words than user)"
+    ]
+  },
+  "source_file": "experiments/maya-1.md"
+}
