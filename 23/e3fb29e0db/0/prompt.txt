@@ -1,0 +1,67 @@
+Using only the skills available to you (YOU MUST USE THE SKILLS),
+use the session-start skill to respond to the following prompt
+from a user of the AI agent system this project prototypes.
+YOU MAY ONLY USE THE SKILLS AND MAY NOT READ ANY OTHER FILES
+TO PREPARE OR DECIDE ON A RESPONSE.
+
+"Could you help me with something?"
+
+---
+
+Im not having a good time in one of my classes.
+
+---
+
+a mix of both
+
+---
+
+i have an assignment due tomorrow that i really havent started yet even though ive had time.
+
+---
+
+I just dont have motivation to do it, ive felt burnt out in the class
+
+---
+
+gradually over time it has gotten worse, and now i just dont know where to start with it
+
+---
+
+the assignment
+
+---
+
+yes
+
+---
+
+Im in my room, and i have until 9am tomorrow
+
+---
+
+i need to produce a research report with heavy focus on revision tactics, ai agent paper modelling, and rounds of feedback from classmates. I already did the outline for it in a previous assignment
+
+---
+
+i dont know
+
+---
+
+yeah
+
+---
+
+i went and read it, however i still feel like i dont really know what to do
+
+---
+
+the revision tactics are pretty straight forward on the rubric
+
+---
+
+i think i know what to do now, at least for the revision stuff
+
+---
+
+i think im good for now

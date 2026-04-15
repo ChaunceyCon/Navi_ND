@@ -1,0 +1,29 @@
+{
+  "cli_version": "0.5.2",
+  "checkpoint_id": "23e3fb29e0db",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 16,
+  "files_touched": [
+    ".claude/skills/burnout-check/SKILL.md",
+    ".claude/skills/session-start/SKILL.md",
+    ".claude/skills/situation-decoder/SKILL.md",
+    ".claude/skills/strategy-toolkit/SKILL.md",
+    ".claude/skills/strength-mapper/SKILL.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/23/e3fb29e0db/0/metadata.json",
+      "transcript": "/23/e3fb29e0db/0/full.jsonl",
+      "content_hash": "/23/e3fb29e0db/0/content_hash.txt",
+      "prompt": "/23/e3fb29e0db/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 57,
+    "cache_creation_tokens": 16177,
+    "cache_read_tokens": 439373,
+    "output_tokens": 4826,
+    "api_call_count": 19
+  }
+}
