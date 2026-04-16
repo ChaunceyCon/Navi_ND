@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.5.2",
+  "checkpoint_id": "bd54b21ed507",
+  "strategy": "manual-commit",
+  "branch": "Railway",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "package-lock.json",
+    "package.json"
+  ],
+  "sessions": [
+    {
+      "metadata": "/bd/54b21ed507/0/metadata.json",
+      "transcript": "/bd/54b21ed507/0/full.jsonl",
+      "content_hash": "/bd/54b21ed507/0/content_hash.txt",
+      "prompt": "/bd/54b21ed507/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 14,
+    "cache_creation_tokens": 7903,
+    "cache_read_tokens": 139496,
+    "output_tokens": 1264,
+    "api_call_count": 8
+  }
+}

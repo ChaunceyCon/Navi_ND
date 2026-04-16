@@ -1,0 +1,9 @@
+npm install is failing on this directory
+
+---
+
+ok
+
+---
+
+initialize a package.json
