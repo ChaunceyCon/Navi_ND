@@ -1,0 +1,23 @@
+{
+  "name": "co-4-2-prototype-class-project-agent",
+  "version": "1.0.0",
+  "description": "An AI agent prototype that helps neurodivergent college students turn abstract self-knowledge into concrete situated action. Built as a Claude Code skills-based prototype for COS 498/598: Generative AI Agents, Spring 2026 at the University of Maine.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChaunceyCon/CO-4-2-Prototype-class-project-agent.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChaunceyCon/CO-4-2-Prototype-class-project-agent/issues"
+  },
+  "homepage": "https://github.com/ChaunceyCon/CO-4-2-Prototype-class-project-agent#readme"
+}

@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neurodiversity Support Coach</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Design tokens ─────────────────────────────────────── */
+    :root {
+      --font-body: 'Inter', system-ui, sans-serif;
+
+      --text-xs:   clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
+      --text-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
+      --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
+      --text-lg:   clamp(1.125rem, 1rem    + 0.75vw, 1.5rem);
+
+      --space-1: 0.25rem; --space-2: 0.5rem;  --space-3: 0.75rem;
+      --space-4: 1rem;    --space-5: 1.25rem; --space-6: 1.5rem;
+      --space-8: 2rem;    --space-10: 2.5rem; --space-12: 3rem;
+
+      --radius-sm: 0.375rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+      --radius-full: 9999px;
+
+      --transition: 160ms cubic-bezier(0.16, 1, 0.3, 1);
+
+      /* Light mode — warm sage palette */
+      --color-bg:             #f5f4f0;
+      --color-surface:        #faf9f6;
+      --color-surface-2:      #ffffff;
+      --color-border:         #dedad4;
+      --color-divider:        #e8e5e0;
+
+      --color-text:           #2a2722;
+      --color-text-muted:     #7a7670;
+      --color-text-faint:     #b5b2ad;
+      --color-text-inverse:   #f9f8f4;
+
+      --color-primary:        #3d8b7a;
+      --color-primary-hover:  #2e7063;
+      --color-primary-active: #1f5549;
+      --color-primary-light:  #e6f2f0;
+      --color-primary-mid:    #c2ddd9;
+
+      --color-user-bubble:    #3d8b7a;
+      --color-user-text:      #ffffff;
+      --color-coach-bubble:   #ffffff;
+      --color-coach-border:   #e0dbd5;
+
+      --color-warning:        #8b5a2b;
+
+      --shadow-sm: 0 1px 3px rgba(40, 35, 25, 0.08);
+      --shadow-md: 0 4px 12px rgba(40, 35, 25, 0.10);
+      --shadow-lg: 0 8px 24px rgba(40, 35, 25, 0.12);
+    }
+
+    [data-theme="dark"] {
+      --color-bg:             #181715;
+      --color-surface:        #1e1d1b;
+      --color-surface-2:      #252422;
+      --color-border:         #363330;
+      --color-divider:        #2c2a28;
+
+      --color-text:           #d4d1cc;
+      --color-text-muted:     #7a7875;
+      --color-text-faint:     #555350;
+      --color-text-inverse:   #2b2a28;
+
+      --color-primary:        #5aab99;
+      --color-primary-hover:  #3d9080;
+      --color-primary-active: #2a7367;
+      --color-primary-light:  #1e2e2c;
+      --color-primary-mid:    #2a403d;
+
+      --color-user-bubble:    #3d8b7a;
+      --color-user-text:      #ffffff;
+      --color-coach-bubble:   #252422;
+      --color-coach-border:   #363330;
+
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.25);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.35);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.45);
+    }
+
+    /* ── Reset ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      color: var(--color-text);
+      background: var(--color-bg);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+    button { cursor: pointer; border: none; background: none; font: inherit; color: inherit; }
+    a, button { transition: color var(--transition), background var(--transition),
+                            border-color var(--transition), opacity var(--transition); }
+    :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px;
+                     border-radius: var(--radius-sm); }
+
+    /* ── Layout ────────────────────────────────────────────── */
+    .app-shell {
+      display: flex;
+      flex-direction: column;
+      height: 100dvh;
+      max-width: 760px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* ── Header ────────────────────────────────────────────── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-4) var(--space-6);
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      box-shadow: var(--shadow-sm);
+      flex-shrink: 0;
+      gap: var(--space-3);
+    }
+
+    .header-left { display: flex; align-items: center; gap: var(--space-3); min-width: 0; }
+
+    /* SVG logo — leaf / seedling mark */
+    .logo-mark {
+      width: 36px; height: 36px; flex-shrink: 0;
+      color: var(--color-primary);
+    }
+
+    .header-text { min-width: 0; }
+    .header-title {
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--color-text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.2;
+    }
+    .header-subtitle {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      line-height: 1.3;
+      margin-top: 2px;
+    }
+
+    .header-actions { display: flex; align-items: center; gap: var(--space-2); flex-shrink: 0; }
+
+    .btn-icon {
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: var(--radius-full);
+      color: var(--color-text-muted);
+      transition: background var(--transition), color var(--transition);
+    }
+    .btn-icon:hover { background: var(--color-divider); color: var(--color-text); }
+    .btn-icon:active { background: var(--color-border); }
+
+    .btn-new-session {
+      font-size: var(--text-sm);
+      font-weight: 500;
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+      border: 1px solid var(--color-primary-mid);
+      white-space: nowrap;
+    }
+    .btn-new-session:hover { background: var(--color-primary-mid); }
+    .btn-new-session:active { background: var(--color-primary); color: var(--color-text-inverse); }
+
+    /* ── Chat area ─────────────────────────────────────────── */
+    .chat-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-6) var(--space-6) var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      scroll-behavior: smooth;
+    }
+
+    /* Welcome state */
+    .welcome {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: var(--space-12) var(--space-8);
+      gap: var(--space-4);
+      animation: fadeIn 0.4s ease;
+    }
+    .welcome-icon {
+      width: 64px; height: 64px;
+      color: var(--color-primary);
+      opacity: 0.85;
+    }
+    .welcome h1 {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--color-text);
+      line-height: 1.25;
+    }
+    .welcome p {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      max-width: 46ch;
+      line-height: 1.65;
+    }
+    .welcome-starters {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      width: 100%;
+      max-width: 440px;
+      margin-top: var(--space-2);
+    }
+    .starter-btn {
+      text-align: left;
+      font-size: var(--text-sm);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-lg);
+      background: var(--color-surface-2);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-muted);
+      line-height: 1.45;
+      transition: background var(--transition), border-color var(--transition), color var(--transition);
+    }
+    .starter-btn:hover {
+      background: var(--color-primary-light);
+      border-color: var(--color-primary-mid);
+      color: var(--color-text);
+    }
+    .starter-btn:active { background: var(--color-primary-mid); }
+
+    /* Message rows */
+    .message-row {
+      display: flex;
+      gap: var(--space-3);
+      animation: slideUp 0.25s ease;
+    }
+    .message-row.user { flex-direction: row-reverse; }
+
+    .avatar {
+      width: 32px; height: 32px;
+      border-radius: var(--radius-full);
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .avatar.coach {
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+      border: 1px solid var(--color-primary-mid);
+    }
+    .avatar.user {
+      background: var(--color-user-bubble);
+      color: var(--color-user-text);
+    }
+
+    .bubble {
+      max-width: min(72ch, 78%);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-lg);
+      font-size: var(--text-base);
+      line-height: 1.65;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .bubble.coach {
+      background: var(--color-coach-bubble);
+      border: 1px solid var(--color-coach-border);
+      box-shadow: var(--shadow-sm);
+      border-top-left-radius: var(--radius-sm);
+      color: var(--color-text);
+    }
+    .bubble.user {
+      background: var(--color-user-bubble);
+      color: var(--color-user-text);
+      border-top-right-radius: var(--radius-sm);
+    }
+
+    /* Typing indicator */
+    .typing-row { align-items: flex-end; }
+    .typing-bubble {
+      background: var(--color-coach-bubble);
+      border: 1px solid var(--color-coach-border);
+      box-shadow: var(--shadow-sm);
+      border-radius: var(--radius-lg);
+      border-top-left-radius: var(--radius-sm);
+      padding: var(--space-3) var(--space-5);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--color-text-faint);
+      animation: bounce 1.2s infinite;
+    }
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
+
+    /* ── Input area ────────────────────────────────────────── */
+    .input-area {
+      padding: var(--space-4) var(--space-6) var(--space-5);
+      background: var(--color-surface);
+      border-top: 1px solid var(--color-border);
+      flex-shrink: 0;
+    }
+    .input-row {
+      display: flex;
+      align-items: flex-end;
+      gap: var(--space-3);
+      background: var(--color-surface-2);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4);
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .input-row:focus-within {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-primary) 15%, transparent);
+    }
+    #message-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: inherit;
+      font-size: var(--text-base);
+      color: var(--color-text);
+      resize: none;
+      max-height: 160px;
+      min-height: 24px;
+      line-height: 1.55;
+      padding: 0;
+    }
+    #message-input::placeholder { color: var(--color-text-faint); }
+
+    .btn-send {
+      width: 38px; height: 38px; flex-shrink: 0;
+      border-radius: var(--radius-full);
+      background: var(--color-primary);
+      color: white;
+      display: flex; align-items: center; justify-content: center;
+      transition: background var(--transition), transform var(--transition), opacity var(--transition);
+    }
+    .btn-send:hover { background: var(--color-primary-hover); }
+    .btn-send:active { background: var(--color-primary-active); transform: scale(0.95); }
+    .btn-send:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    .input-hint {
+      font-size: var(--text-xs);
+      color: var(--color-text-faint);
+      text-align: center;
+      margin-top: var(--space-2);
+    }
+
+    /* ── Crisis banner ─────────────────────────────────────── */
+    .crisis-banner {
+      display: none;
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: var(--radius-md);
+      padding: var(--space-3) var(--space-4);
+      font-size: var(--text-sm);
+      color: #664d03;
+      line-height: 1.5;
+      margin: 0 var(--space-6) var(--space-2);
+    }
+    .crisis-banner.visible { display: block; }
+    [data-theme="dark"] .crisis-banner {
+      background: #2c2200;
+      border-color: #665000;
+      color: #ffd966;
+    }
+
+    /* ── Animations ────────────────────────────────────────── */
+    @keyframes bounce {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+      30% { transform: translateY(-5px); opacity: 1; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* ── Mobile ────────────────────────────────────────────── */
+    @media (max-width: 480px) {
+      .header { padding: var(--space-3) var(--space-4); }
+      .chat-area { padding: var(--space-4) var(--space-4) var(--space-3); }
+      .input-area { padding: var(--space-3) var(--space-4) var(--space-4); }
+      .btn-new-session { font-size: var(--text-xs); padding: var(--space-2) var(--space-3); }
+      .bubble { max-width: 88%; }
+      .crisis-banner { margin: 0 var(--space-4) var(--space-2); }
+    }
+  </style>
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- Header -->
+  <header class="header" role="banner">
+    <div class="header-left">
+      <!-- Seedling logo mark -->
+      <svg class="logo-mark" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <circle cx="18" cy="18" r="17" fill="currentColor" opacity="0.12"/>
+        <path d="M18 28 L18 16" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round"/>
+        <path d="M18 20 C18 20 13 18 12 13 C12 13 17 11 20 15"
+              fill="currentColor" opacity="0.7"/>
+        <path d="M18 23 C18 23 22 20 24 15 C24 15 19 14 17 19"
+              fill="currentColor" opacity="0.9"/>
+      </svg>
+      <div class="header-text">
+        <div class="header-title">Neurodiversity Support Coach</div>
+        <div class="header-subtitle">Your thought partner — University of Maine</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <!-- New session -->
+      <button class="btn-new-session" id="btn-new-session"
+              title="Start a new session" aria-label="Start a new session">
+        New session
+      </button>
+      <!-- Theme toggle -->
+      <button class="btn-icon" id="theme-toggle"
+              aria-label="Switch to dark mode" title="Toggle dark mode">
+        <!-- sun icon -->
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"/>
+          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42
+                   M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Crisis resources banner (shown when keywords detected) -->
+  <div class="crisis-banner" id="crisis-banner" role="alert" aria-live="assertive">
+    🧡 If you're in crisis, please reach out: <strong>988</strong> (Suicide &amp; Crisis Lifeline — call or text 24/7) ·
+    <strong>UMaine Counseling Center</strong>: (207) 581-1392
+  </div>
+
+  <!-- Chat messages -->
+  <main class="chat-area" id="chat-area" role="main" aria-label="Conversation">
+
+    <!-- Welcome screen (shown until first message) -->
+    <div class="welcome" id="welcome" aria-live="polite">
+      <svg class="welcome-icon" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <circle cx="32" cy="32" r="30" fill="currentColor" opacity="0.08"/>
+        <path d="M32 50 L32 28" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round"/>
+        <path d="M32 36 C32 36 22 32 20 22 C20 22 30 18 34 26"
+              fill="currentColor" opacity="0.65"/>
+        <path d="M32 42 C32 42 40 37 43 27 C43 27 33 25 30 34"
+              fill="currentColor" opacity="0.85"/>
+      </svg>
+      <h1>What's on your mind today?</h1>
+      <p>I'm here to help you work through academic situations, apply what
+         you know about yourself, find real strategies, or just check in.
+         Start wherever feels right.</p>
+      <div class="welcome-starters" role="list">
+        <button class="starter-btn" role="listitem"
+          data-msg="I have a paper due tomorrow and I keep reading the prompt but I do not understand what the professor actually wants from me.">
+          "I keep reading the prompt but I don't understand what the professor actually wants…"
+        </button>
+        <button class="starter-btn" role="listitem"
+          data-msg="I have a big assignment this weekend but it feels pointless and I cannot make myself start it.">
+          "I can't make myself start — I know how I work but I don't know how to apply that here…"
+        </button>
+        <button class="starter-btn" role="listitem"
+          data-msg="I am so tired. I have been pushing through everything for weeks and I do not know how much longer I can keep doing this.">
+          "I've been pushing through everything for weeks and I don't know how much longer I can do this…"
+        </button>
+        <button class="starter-btn" role="listitem"
+          data-msg="I have a group presentation next week and I am dreading it. I need strategies that actually fit how I work.">
+          "I have a presentation next week and I'm dreading it — I need strategies that actually fit me…"
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Input area -->
+  <footer class="input-area" role="contentinfo">
+    <div class="input-row">
+      <textarea
+        id="message-input"
+        rows="1"
+        placeholder="What's on your mind?"
+        aria-label="Your message"
+        autocomplete="off"
+        spellcheck="true"
+      ></textarea>
+      <button class="btn-send" id="btn-send"
+              aria-label="Send message" title="Send (Enter)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+          <path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <p class="input-hint">Press <kbd>Enter</kbd> to send · <kbd>Shift+Enter</kbd> for new line</p>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  // ── State ──────────────────────────────────────────────────────────────────
+  let sessionId = null;
+  let isWaiting = false;
+
+  // ── DOM refs ───────────────────────────────────────────────────────────────
+  const chatArea      = document.getElementById('chat-area');
+  const welcome       = document.getElementById('welcome');
+  const input         = document.getElementById('message-input');
+  const btnSend       = document.getElementById('btn-send');
+  const btnNew        = document.getElementById('btn-new-session');
+  const themeToggle   = document.getElementById('theme-toggle');
+  const crisisBanner  = document.getElementById('crisis-banner');
+  const html          = document.documentElement;
+
+  // ── Theme ──────────────────────────────────────────────────────────────────
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  let currentTheme = prefersDark ? 'dark' : 'light';
+  html.setAttribute('data-theme', currentTheme);
+  updateThemeIcon();
+
+  themeToggle.addEventListener('click', () => {
+    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', currentTheme);
+    themeToggle.setAttribute('aria-label',
+      `Switch to ${currentTheme === 'dark' ? 'light' : 'dark'} mode`);
+    updateThemeIcon();
+  });
+
+  function updateThemeIcon() {
+    themeToggle.innerHTML = currentTheme === 'dark'
+      ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" aria-hidden="true">
+           <circle cx="12" cy="12" r="5"/>
+           <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42
+                    M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+         </svg>`
+      : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" aria-hidden="true">
+           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+         </svg>`;
+  }
+
+  // ── Auto-resize textarea ───────────────────────────────────────────────────
+  input.addEventListener('input', () => {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 160) + 'px';
+  });
+
+  // ── Enter key ──────────────────────────────────────────────────────────────
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+
+  btnSend.addEventListener('click', sendMessage);
+
+  // ── Starter buttons ────────────────────────────────────────────────────────
+  document.querySelectorAll('.starter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      input.value = btn.dataset.msg;
+      input.style.height = 'auto';
+      input.style.height = Math.min(input.scrollHeight, 160) + 'px';
+      sendMessage();
+    });
+  });
+
+  // ── New session ────────────────────────────────────────────────────────────
+  btnNew.addEventListener('click', async () => {
+    if (!confirm('Start a new session? This will clear the current conversation.')) return;
+    await fetch('/new-session', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({session_id: sessionId}),
+    });
+    sessionId = null;
+    isWaiting = false;
+    crisisBanner.classList.remove('visible');
+    // Clear messages but keep welcome
+    Array.from(chatArea.children).forEach(el => {
+      if (el.id !== 'welcome') el.remove();
+    });
+    welcome.style.display = '';
+    input.value = '';
+    input.style.height = 'auto';
+    btnSend.disabled = false;
+  });
+
+  // ── Crisis keyword detection ───────────────────────────────────────────────
+  const CRISIS_KEYWORDS = [
+    'hurt myself', 'end it', "can't go on", 'hopeless', 'no point',
+    'suicide', 'self-harm', 'give up', "don't want to be here",
+    'want to die', 'not worth it',
+  ];
+  function checkCrisis(text) {
+    const lower = text.toLowerCase();
+    return CRISIS_KEYWORDS.some(kw => lower.includes(kw));
+  }
+
+  // ── Send message ───────────────────────────────────────────────────────────
+  async function sendMessage() {
+    const text = input.value.trim();
+    if (!text || isWaiting) return;
+
+    // Hide welcome on first message
+    welcome.style.display = 'none';
+
+    // Show crisis banner if needed
+    if (checkCrisis(text)) crisisBanner.classList.add('visible');
+
+    appendMessage('user', text);
+    input.value = '';
+    input.style.height = 'auto';
+
+    isWaiting = true;
+    btnSend.disabled = true;
+
+    const typingEl = showTyping();
+
+    try {
+      const res = await fetch('/chat', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({message: text, session_id: sessionId}),
+      });
+      const data = await res.json();
+
+      typingEl.remove();
+      isWaiting = false;
+      btnSend.disabled = false;
+
+      if (data.error) {
+        appendMessage('coach', `⚠ Something went wrong: ${data.error}`);
+      } else {
+        sessionId = data.session_id;
+        appendMessage('coach', data.response);
+        if (checkCrisis(data.response)) crisisBanner.classList.add('visible');
+      }
+    } catch (err) {
+      typingEl.remove();
+      isWaiting = false;
+      btnSend.disabled = false;
+      appendMessage('coach',
+        '⚠ Could not reach the server. Check your connection and try again.');
+    }
+
+    input.focus();
+  }
+
+  // ── Append a message bubble ────────────────────────────────────────────────
+  function appendMessage(role, text) {
+    const row = document.createElement('div');
+    row.className = `message-row ${role}`;
+    row.setAttribute('role', 'listitem');
+
+    const avatar = document.createElement('div');
+    avatar.className = `avatar ${role}`;
+    avatar.textContent = role === 'coach' ? '🌱' : 'You';
+    avatar.setAttribute('aria-hidden', 'true');
+
+    const bubble = document.createElement('div');
+    bubble.className = `bubble ${role}`;
+    bubble.textContent = text;
+
+    row.appendChild(avatar);
+    row.appendChild(bubble);
+    chatArea.appendChild(row);
+    scrollToBottom();
+  }
+
+  // ── Typing indicator ───────────────────────────────────────────────────────
+  function showTyping() {
+    const row = document.createElement('div');
+    row.className = 'message-row coach typing-row';
+    row.setAttribute('aria-label', 'Coach is typing');
+    row.setAttribute('aria-live', 'polite');
+
+    const avatar = document.createElement('div');
+    avatar.className = 'avatar coach';
+    avatar.textContent = '🌱';
+    avatar.setAttribute('aria-hidden', 'true');
+
+    const bubble = document.createElement('div');
+    bubble.className = 'typing-bubble';
+    bubble.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+
+    row.appendChild(avatar);
+    row.appendChild(bubble);
+    chatArea.appendChild(row);
+    scrollToBottom();
+    return row;
+  }
+
+  // ── Scroll ─────────────────────────────────────────────────────────────────
+  function scrollToBottom() {
+    chatArea.scrollTo({top: chatArea.scrollHeight, behavior: 'smooth'});
+  }
+
+  // ── Focus input on load ────────────────────────────────────────────────────
+  input.focus();
+})();
+</script>
+</body>
+</html>
