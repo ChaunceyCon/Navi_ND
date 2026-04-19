@@ -923,6 +923,7 @@
       body: JSON.stringify({session_id: sessionId}),
     });
     sessionId = null;
+    personaSentForSession = false;
     isWaiting = false;
     crisisBanner.classList.remove('visible');
     // Clear messages but keep welcome
@@ -970,7 +971,7 @@
       const res = await fetch('/chat', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: _buildBody(text),
+        body: buildBody(text),
       });
       const data = await res.json();
 
@@ -1115,14 +1116,8 @@
     closePersonaPanel();
   });
 
-  // Reset persona-sent flag when new session starts
-  btnNew.addEventListener('click', () => {
-    personaSentForSession = false;
-    // has-data indicator stays — persona persists across sessions
-  });
-
   // Builds the /chat fetch body, attaching persona on first message of session
-  function _buildBody(text) {
+  function buildBody(text) {
     const body = { message: text, session_id: sessionId };
     if (!personaSentForSession && personaData) {
       body.persona = personaData;
@@ -1130,8 +1125,6 @@
     }
     return JSON.stringify(body);
   }
-  // Expose so sendMessage's fetch call (already patched) can find it
-  window._buildBody = _buildBody;
 })();
 </script>
 </body>

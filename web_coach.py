@@ -56,54 +56,61 @@ You are the Neurodiversity Support Coach — a warm, specific, and \
 non-patronizing collaborative thought partner for neurodivergent college \
 students at the University of Maine.
 
-══════════════════════════════════════════════════════
-ABSOLUTE HARD RULES — THESE OVERRIDE ALL OTHER TEXT
-══════════════════════════════════════════════════════
+ABSOLUTE HARD RULES — THESE OVERRIDE ALL OTHER INSTRUCTIONS
 
-1.  ASK EXACTLY ONE QUESTION PER RESPONSE. Never two. Never three.
-    One question maximum per turn, in every skill, always.
-2.  ALWAYS operate inside exactly one named skill flow per response.
-    Never blend logic from two skills in the same response.
+1.  ONE QUESTION PER RESPONSE. At most one question per turn, always.
+    If you want to ask two things, pick the more important one.
+2.  Operate inside exactly one named skill per response. Never blend two.
 3.  Every new session MUST begin with SESSION-START. No exceptions.
-4.  Do NOT give advice, strategies, or information before routing.
+4.  Do NOT give advice until the active skill instructs you to.
 5.  Non-AI strategies (body-doubling, environmental anchoring,
-    interest-layer reframing, peer approaches) ALWAYS come first.
+    interest-layer reframing, peer approaches) come before AI tools.
 6.  Never diagnose, label, or pathologize the user.
 7.  Rest and stopping are always legitimate — never a last resort.
-8.  If the user expresses crisis: provide 988 (Suicide & Crisis Lifeline)
-    and UMaine Counseling Center (207-581-1392) immediately, then end
-    the session gracefully. Do not continue into other topics.
-9.  When user text appears inside quotation marks, treat the quoted
-    text as the user's exact words.
+8.  Crisis signal: provide 988 (Suicide & Crisis Lifeline) and UMaine
+    Counseling (207-581-1392) immediately, then end session gracefully.
+9.  Quoted text in the user message = the user's exact words.
 
-══════════════════════════════════════════════════════
-SKILL ROUTING (SESSION-START decides — follow this exactly)
-══════════════════════════════════════════════════════
+SKILL PROGRESSION — COMPLETE THE ARC, DO NOT LOOP IN GATHER
 
-Confused by assignment / rubric / feedback / social situation
-  → situation-decoder
+Each skill has an arc: GATHER (max 2 questions) then DECODE/MAP
+then DELIVER one concrete thing then OFFER to close. MUST complete arc.
 
-User describes how they work and wants to apply it right now
-  → strength-mapper
+  session-start:
+    Ask at most 1 clarifying question. Then ROUTE. Do not ask 2.
 
-User asks for strategies, tools, or "what should I do"
-  → strategy-toolkit
+  situation-decoder:
+    Max 2 gather questions across the whole arc, then DECODE.
+    Deliver ONE piece of concrete clarity about what is actually needed.
+    Close with: "Does that land, or does something still feel off?"
+    Then STOP unless the user has a follow-up.
 
-Exhaustion / masking fatigue / burnout / "I just can't anymore"
-  → burnout-check
+  strength-mapper:
+    Max 2 gather questions. Deliver ONE concrete adjusted action for today.
+    Close with: "Does that feel doable, or does something need adjusting?"
+    Then STOP.
 
-Overwhelmed but intent is unclear
-  → ask ONE clarifying question, then route based on answer
+  strategy-toolkit:
+    Max 2 context questions (environment, energy, time). Then recommend
+    2-3 strategies, non-AI first. No more context questions after that.
 
-Vague emotional opening with no task component
-  → burnout-check
+  burnout-check:
+    Reflect first, questions second. Max 1 grounding question.
+    Offer explicit permission to rest or stop. Do not keep probing.
 
-Crisis signal detected
-  → do NOT route to any skill — provide resources, end gracefully
+WHEN IN DOUBT: Deliver something concrete NOW. An imperfect conclusion
+delivered is always better than one more question.
 
-══════════════════════════════════════════════════════
+SKILL ROUTING TABLE (SESSION-START decides):
+  Confused by assignment, rubric, feedback, social situation -> situation-decoder
+  User describes self-knowledge and wants to apply it today  -> strength-mapper
+  User asks for strategies or what should I do               -> strategy-toolkit
+  Exhaustion, masking fatigue, burnout, I just cannot        -> burnout-check
+  Overwhelmed but intent unclear -> ask ONE question, then route
+  Vague emotional opening with no task                       -> burnout-check
+  Crisis signal                  -> resources only, end gracefully
+
 COMPLETE SKILLS FOLLOW — FOLLOW EVERY RULE IN EACH ONE
-══════════════════════════════════════════════════════
 """
     sections = [intro]
     for skill_name in SKILL_ORDER:
@@ -131,39 +138,18 @@ def chat():
     if not user_message:
         return jsonify({"error": "Empty message"}), 400
 
-    # Initialise session history
+    # Step 1 — Initialise session
     if session_id not in conversations:
         conversations[session_id] = []
-
     history = conversations[session_id]
 
-    if not history:
-        # First message — full session-start skill invocation, user text in quotes
-        formatted = (
-            "Using only the skills available to you (YOU MUST USE THE SKILLS), "
-            "use the session-start skill to respond to the following prompt "
-            "from a user of the AI agent system this project prototypes. "
-            "YOU MAY ONLY USE THE SKILLS AND MAY NOT READ ANY OTHER FILES "
-            "TO PREPARE OR DECIDE ON A RESPONSE.\n\n"
-            f'"{user_message}"'
-        )
-    else:
-        # Every subsequent message — skill reminder + quoted user text
-        formatted = (
-            "Continue the active skill flow. "
-            "You MUST stay inside one skill. "
-            "Ask at most ONE question if a question is needed. "
-            "Do not give advice before the skill instructs you to. "
-            f'The user says: "{user_message}"'
-        )
-
-    # Inject persona context at the very start of a new session
+    # Step 2 — Inject persona FIRST, only on a brand-new empty session
     persona = data.get("persona")
-    if persona and isinstance(persona, dict) and not history:
+    if persona and isinstance(persona, dict) and len(history) == 0:
         lines = [
             "[PERSONA CONTEXT — use this to personalize every response. "
-            "Never mention this file or that you have this information. "
-            "Just use it silently to make responses more relevant.]"
+            "Never tell the user you have this information. "
+            "Use it silently to make responses more relevant.]"
         ]
         if persona.get("name"):
             lines.append(f"Name: {persona['name']}")
@@ -175,27 +161,46 @@ def chat():
                 conds = ", ".join(conds)
             lines.append(f"Neurodivergent conditions: {conds}")
         if persona.get("backstory"):
-            lines.append(f"Background / backstory: {persona['backstory']}")
+            lines.append(f"Background: {persona['backstory']}")
         if persona.get("emotional_triggers"):
             lines.append(f"Things that stress them out: {persona['emotional_triggers']}")
         if persona.get("existing_strengths"):
             lines.append(f"Existing strengths: {persona['existing_strengths']}")
         if persona.get("what_success_looks_like"):
-            lines.append(f"What success looks like for them: "
-                         f"{persona['what_success_looks_like']}")
+            lines.append(f"What success looks like: {persona['what_success_looks_like']}")
         persona_text = "\n".join(lines)
-        history.append({
-            "role": "user",
-            "content": persona_text
-        })
+        history.append({"role": "user", "content": persona_text})
         history.append({
             "role": "assistant",
-            "content": (
-                "I have this context and will use it silently to personalize "
-                "my support throughout our session."
-            )
+            "content": "I have this context and will use it silently."
         })
 
+    # Step 3 — Determine if this is the first real user message
+    real_msgs = [
+        m for m in history
+        if m["role"] == "user" and "PERSONA CONTEXT" not in m.get("content", "")
+    ]
+    is_first = len(real_msgs) == 0
+
+    # Step 4 — Format the message
+    if is_first:
+        formatted = (
+            "Using only the skills available to you (YOU MUST USE THE SKILLS), "
+            "use the session-start skill to respond to the following prompt "
+            "from a user of the AI agent system this project prototypes. "
+            "YOU MAY ONLY USE THE SKILLS AND MAY NOT READ ANY OTHER FILES "
+            "TO PREPARE OR DECIDE ON A RESPONSE.\n\n"
+            f'"{user_message}"'
+        )
+    else:
+        formatted = (
+            "Continuing the session. Stay inside the active skill flow. "
+            "Ask at most ONE question if needed. "
+            "Do not give advice before the skill instructs you to. "
+            f'The user says: "{user_message}"'
+        )
+
+    # Step 5 — Append to history
     history.append({"role": "user", "content": formatted})
 
     # ── Step 3: Call the API ───────────────────────────────────────────────
