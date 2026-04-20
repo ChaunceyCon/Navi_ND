@@ -1,0 +1,29 @@
+Using only the skills available to you (YOU MUST USE THE SKILLS),
+use the session-start skill to respond to the following prompt
+from a user of the AI agent system this project prototypes.
+YOU MAY ONLY USE THE SKILLS AND MAY NOT READ ANY OTHER FILES
+TO PREPARE OR DECIDE ON A RESPONSE."im stuck"
+
+---
+
+home is bad
+
+---
+
+id rather not
+
+---
+
+a lot always all the time
+
+---
+
+i dont know what im gonna do
+
+---
+
+okay i will later
+
+---
+
+lets just continue our discussion

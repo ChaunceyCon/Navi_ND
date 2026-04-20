@@ -3,7 +3,7 @@
   "checkpoint_id": "2b8304eb7206",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 15,
+  "checkpoints_count": 22,
   "files_touched": [
     ".claude/skills/burnout-check/SKILL.md",
     ".claude/skills/session-start/SKILL.md"
@@ -26,13 +26,19 @@
       "transcript": "/2b/8304eb7206/2/full.jsonl",
       "content_hash": "/2b/8304eb7206/2/content_hash.txt",
       "prompt": "/2b/8304eb7206/2/prompt.txt"
+    },
+    {
+      "metadata": "/2b/8304eb7206/3/metadata.json",
+      "transcript": "/2b/8304eb7206/3/full.jsonl",
+      "content_hash": "/2b/8304eb7206/3/content_hash.txt",
+      "prompt": "/2b/8304eb7206/3/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 65,
-    "cache_creation_tokens": 38649,
-    "cache_read_tokens": 470724,
-    "output_tokens": 2513,
-    "api_call_count": 22
+    "input_tokens": 92,
+    "cache_creation_tokens": 50615,
+    "cache_read_tokens": 670129,
+    "output_tokens": 5068,
+    "api_call_count": 31
   }
 }
