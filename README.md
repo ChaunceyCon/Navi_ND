@@ -17,9 +17,8 @@ The agent acts as a collaborative thought partner — warm, specific, and non-pa
 
 ## Web Version
 
-Access the web version of the Agent at https://co-4-2-prototype-class-project-agent-production.up.railway.app/
-If you wish to run the agent on your own device instead, continue with Prerequisties and Setup.
-Otherwise, skip to "How to Run the Agent" Step 3.
+- Access the web version of the Agent at https://co-4-2-prototype-class-project-agent-production.up.railway.app/
+- If you wish to run the agent on your own device instead, continue below.
 
 ## Prerequisites
 
