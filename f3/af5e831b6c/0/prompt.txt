@@ -1,0 +1,87 @@
+I need to update the readme to include info on the SDK package. here is a copy paste of what may be relevant:Prerequisites (both interfaces)
+Python 3.10 or higher
+
+An Anthropic API key (get one here)
+
+The repository cloned locally
+
+bash
+git clone https://github.com/ChaunceyCon/CO-4-2-Prototype-class-project-agent.git
+cd CO-4-2-Prototype-class-project-agent
+Option 1 — Web Chat Interface (Flask)
+The web interface runs in your browser at localhost:5000.
+
+Install dependencies:
+
+bash
+pip install flask anthropic
+Set your API key:
+
+bash
+export ANTHROPIC_API_KEY=your-key-here
+Start the server:
+
+bash
+python web_coach.py
+Open in browser:
+
+text
+http://localhost:5000/
+Use the About Me panel (tab on the right side) to enter your name, age, neurodivergent conditions, and background before starting a chat. This lets the coach personalize responses to your situation. Fill it out and click Save profile before sending your first message.
+
+Option 2 — Claude Agent SDK (Terminal/CLI)
+The CLI version runs directly in your terminal using the Claude Agent SDK.
+
+Install the SDK (Claude Code CLI is bundled automatically — no separate install needed ):
+
+bash
+pip install claude-agent-sdk anthropic
+Set your API key:
+
+bash
+export ANTHROPIC_API_KEY=your-key-here
+Run the coach:
+
+bash
+python coach.py
+You will be prompted to type your opening message. The agent reads your .claude/skills/ files and routes to the right skill automatically.Example opening messages:
+
+text
+What's on your mind? → I have a paper due tomorrow and I keep reading the
+prompt but I do not understand what the professor actually wants from me.
+
+What's on your mind? → I am so tired. I have been pushing through everything
+for weeks and I do not know how much longer I can keep doing this.
+Type exit at any point to end the session.
+
+Option 3 — Original Claude Code Terminal (still works)
+bash
+From the repo root in WSL/terminal
+claude
+Then paste the session-start prompt format from the Skills Overview section above.
+
+Persona Files (for testing)
+Test personas are in data/personas/. Reference a persona name in your opening message (e.g. "I am Maya...") to simulate a realistic student profile.
+
+Persona    Profile
+maya.json    Sophomore, ADHD, two jobs, chronically behind
+david.json    Senior CS, autistic, heavy masker
+priya.json    Junior nursing, high-achieving, burning out
+jordan.json    Freshman, first-gen, dyslexic
+chauncey.json    CS junior, self-testing persona
+One thing to check before adding this to your README: confirm that coach.py is actually saved in your repo root. If it was only provided in our chat but never saved, let me know and I will regenerate the complete file for you to drop in.
+﻿
+KilldroneX
+killdronex
+
+---
+
+what would that look like
+
+---
+
+are you leaving in the thing about just using the laready running site if you donty want to host it at all and just want to use it
+
+---
+
+b
