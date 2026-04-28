@@ -102,11 +102,17 @@
     <div class="persona-prompt" id="persona-prompt"
          role="status" aria-live="polite" hidden>
       <div class="persona-prompt-content">
-        <p>
+        <p class="persona-prompt-msg msg-default">
           <strong>Tip:</strong> fill out the
           <button type="button" class="persona-prompt-link"
-                  id="persona-prompt-open">About Me</button>
+                  data-persona-open>About Me</button>
           panel for more tailored support.
+        </p>
+        <p class="persona-prompt-msg msg-update">
+          <strong>New session:</strong> consider updating your
+          <button type="button" class="persona-prompt-link"
+                  data-persona-open>About Me</button>
+          profile for this conversation.
         </p>
       </div>
       <button class="btn-icon persona-prompt-close" id="persona-prompt-close"

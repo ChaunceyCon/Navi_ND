@@ -618,6 +618,9 @@ a, button { transition: color var(--transition), background var(--transition),
   line-height: 1.5;
   margin: 0;
 }
+.persona-prompt-msg { display: none; }
+.persona-prompt:not(.update-mode) .msg-default { display: block; }
+.persona-prompt.update-mode .msg-update { display: block; }
 
 .persona-prompt-link {
   font: inherit;
