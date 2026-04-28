@@ -98,6 +98,25 @@
 
   <!-- Input area -->
   <footer class="input-area" role="contentinfo">
+    <!-- First-click nudge to fill out the persona panel -->
+    <div class="persona-prompt" id="persona-prompt"
+         role="status" aria-live="polite" hidden>
+      <div class="persona-prompt-content">
+        <p>
+          <strong>Tip:</strong> fill out the
+          <button type="button" class="persona-prompt-link"
+                  id="persona-prompt-open">About Me</button>
+          panel for more tailored support.
+        </p>
+      </div>
+      <button class="btn-icon persona-prompt-close" id="persona-prompt-close"
+              aria-label="Dismiss tip">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
     <div class="input-row">
       <textarea
         id="message-input"

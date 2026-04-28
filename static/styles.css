@@ -595,3 +595,52 @@ a, button { transition: color var(--transition), background var(--transition),
   .persona-panel { transition: none; }
   .persona-overlay { animation: none; }
 }
+
+/* ── Persona nudge (notification above input) ──────────── */
+.persona-prompt {
+  display: none;
+  align-items: center;
+  gap: var(--space-3);
+  background: var(--color-primary-light);
+  border: 1px solid var(--color-primary-mid);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3) var(--space-2) var(--space-4);
+  margin-bottom: var(--space-3);
+  box-shadow: var(--shadow-sm);
+  animation: slideUp 0.25s ease;
+}
+.persona-prompt.open { display: flex; }
+
+.persona-prompt-content { flex: 1; min-width: 0; }
+.persona-prompt-content p {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.persona-prompt-link {
+  font: inherit;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  padding: 0;
+  border-radius: var(--radius-sm);
+}
+.persona-prompt-link:hover { color: var(--color-primary-hover); }
+
+.persona-prompt-close {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  color: var(--color-text-muted);
+}
+.persona-prompt-close:hover {
+  background: color-mix(in oklab, var(--color-primary) 12%, transparent);
+  color: var(--color-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .persona-prompt { animation: none; }
+}

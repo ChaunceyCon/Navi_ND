@@ -80,6 +80,8 @@
     sessionId = null;
     personaSentForSession = false;
     isWaiting = false;
+    forcePromptOnce = true;
+    dismissPersonaPrompt();
     crisisBanner.classList.remove('visible');
     // Clear messages but keep welcome
     Array.from(chatArea.children).forEach(el => {
@@ -216,6 +218,7 @@
   const btnSkipPersona = document.getElementById('btn-skip-persona');
 
   function openPersonaPanel() {
+    dismissPersonaPrompt();
     personaPanel.classList.add('open');
     personaOverlay.classList.add('open');
     personaTab.setAttribute('aria-expanded', 'true');
@@ -228,6 +231,34 @@
     personaTab.focus();
   }
 
+  // ── Persona nudge ──────────────────────────────────────────────────────
+  // Default: shows on every input click while persona is at its defaults.
+  // New-session override: forces the popup to appear once on the next input
+  // click even if the user has already filled out their persona.
+  const personaPrompt      = document.getElementById('persona-prompt');
+  const personaPromptOpen  = document.getElementById('persona-prompt-open');
+  const personaPromptClose = document.getElementById('persona-prompt-close');
+  let forcePromptOnce = false;
+
+  function showPersonaPrompt() {
+    if (!forcePromptOnce && personaData) return;
+    forcePromptOnce = false;
+    personaPrompt.hidden = false;
+    personaPrompt.classList.add('open');
+  }
+  function dismissPersonaPrompt() {
+    personaPrompt.classList.remove('open');
+    personaPrompt.hidden = true;
+  }
+
+  input.addEventListener('click', showPersonaPrompt);
+
+  personaPromptOpen.addEventListener('click', () => {
+    dismissPersonaPrompt();
+    openPersonaPanel();
+  });
+  personaPromptClose.addEventListener('click', dismissPersonaPrompt);
+
   personaTab.addEventListener('click', openPersonaPanel);
   personaClose.addEventListener('click', closePersonaPanel);
   personaOverlay.addEventListener('click', closePersonaPanel);
@@ -237,8 +268,11 @@
   });
 
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && personaPanel.classList.contains('open')) {
+    if (e.key !== 'Escape') return;
+    if (personaPanel.classList.contains('open')) {
       closePersonaPanel();
+    } else if (personaPrompt.classList.contains('open')) {
+      dismissPersonaPrompt();
     }
   });
 
