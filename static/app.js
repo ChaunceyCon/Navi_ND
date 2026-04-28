@@ -320,15 +320,17 @@
   // ── Persona nudge ──────────────────────────────────────────────────────
   // Default: shows on every input click while persona is at its defaults.
   // New-session override: forces the popup to appear once on the next input
-  // click even if the user has already filled out their persona.
+  // click even if the user has already filled out their persona — and uses
+  // the "update your profile" wording instead of the default "fill out" tip.
   const personaPrompt      = document.getElementById('persona-prompt');
-  const personaPromptOpen  = document.getElementById('persona-prompt-open');
   const personaPromptClose = document.getElementById('persona-prompt-close');
   let forcePromptOnce = false;
 
   function showPersonaPrompt() {
     if (!forcePromptOnce && personaData) return;
+    const updateMode = forcePromptOnce && personaData !== null;
     forcePromptOnce = false;
+    personaPrompt.classList.toggle('update-mode', updateMode);
     personaPrompt.hidden = false;
     personaPrompt.classList.add('open');
   }
@@ -339,9 +341,11 @@
 
   input.addEventListener('click', showPersonaPrompt);
 
-  personaPromptOpen.addEventListener('click', () => {
-    dismissPersonaPrompt();
-    openPersonaPanel();
+  personaPrompt.querySelectorAll('[data-persona-open]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      dismissPersonaPrompt();
+      openPersonaPanel();
+    });
   });
   personaPromptClose.addEventListener('click', dismissPersonaPrompt);
 
