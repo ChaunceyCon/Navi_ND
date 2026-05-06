@@ -1,6 +1,8 @@
-# eval/
+# Evaluation Harness
 
-LLM-as-a-judge harness for the Neurodiversity Support Agent. Reads saved conversations from `data/conversations.csv` and runs a configurable set of metric judges over each session, writing a per-run summary JSON.
+An LLM-as-a-judge harness for the Neurodiversity Support Agent. Reads saved conversations from `data/conversations.csv` and runs a configurable set of metric judges over each session, writing a per-run summary JSON.
+
+***
 
 ## What's here
 
@@ -15,6 +17,8 @@ LLM-as-a-judge harness for the Neurodiversity Support Agent. Reads saved convers
 | `judges/context_questions_judge.py` | LLM judge. Enumerates every agent question and tags it `user_context` / `task_context` / `other`. |
 | `results/` | Per-run `summary-<timestamp>.json` files land here. |
 
+***
+
 ## Input data
 
 Conversations come from `data/conversations.csv`, written by `web_coach.py` with one row per turn:
@@ -24,6 +28,8 @@ timestamp, session_id, role, content
 ```
 
 Each `session_id` is one conversation; rows are sorted by timestamp into turns. Locally the CSV is populated by chatting with `python web_coach.py`; in production it lives in the Railway volume and can be downloaded via the `/download-conversations` endpoint.
+
+***
 
 ## Running
 
@@ -79,6 +85,8 @@ The CLI flag is the judge's `name` attribute (the key in `ALL_JUDGES`), not the 
 | `judges/mode_detection_judge.py` | `mode_detection_latency` |
 | `judges/context_questions_judge.py` | `context_questions` |
 
+***
+
 ## Output format
 
 Each run writes `eval/results/summary-<timestamp>.json`:
@@ -123,6 +131,8 @@ Each run writes `eval/results/summary-<timestamp>.json`:
 | `context_questions` | total questions the agent asked | descriptive (no direction) | `n_user_context_questions`, `n_task_context_questions`, `n_other_questions`, `first_user_context_question_turn`, `first_task_context_question_turn`, full `questions` list with per-question turn index and category |
 
 For `mode_detection_latency` specifically, the headline number is the score (latency), but the more discriminating signal is usually `metadata.avg_adaptation_score` (mean of the 1–5 ratings across all turns).
+
+***
 
 ## Adding a metric
 
@@ -169,6 +179,8 @@ For `mode_detection_latency` specifically, the headline number is the score (lat
    ```
 
 Each turn in `transcript` is `{"speaker": "user" | "assistant", "text": str}`. For LLM judges, `format_for_prompt(transcript)` formats the turn list with stable `[USER turn N]` / `[AGENT turn N]` markers so the model can return turn indices.
+
+***
 
 ## Architecture note
 

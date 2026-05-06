@@ -245,15 +245,13 @@ experiments/
 
 ## Running Evaluations
 
-From the repo root in WSL:
+The eval harness scores saved conversations from `data/conversations.csv`. Quick smoke test (no API key needed):
 
 ```bash
-# Structural metrics only (no API key needed)
-python3 eval/run_eval.py --precomputed > experiments/eval-structural-results.md
-
-# Full interactive evaluation
-python3 eval/run_eval.py
+python -m eval.run_eval --judges length_tally
 ```
+
+For full setup, judge contracts, and output schema, see `eval/README.md`.
 
 ***
 
