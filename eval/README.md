@@ -42,20 +42,13 @@ The eval harness reads `ANTHROPIC_API_KEY` from your shell environment, matching
 ```powershell
 # Paste the key for the current session
 $env:ANTHROPIC_API_KEY = "sk-ant-..."
-
-# Or load it (and any other vars) from .env once for the session
-Get-Content .env | ForEach-Object {
-  if ($_ -match '^\s*([^#=][^=]*)\s*=\s*(.*?)\s*$') {
-    [Environment]::SetEnvironmentVariable($matches[1], $matches[2].Trim('"',"'"), 'Process')
-  }
-}
 ```
 
 **Bash:**
 
 ```bash
 export ANTHROPIC_API_KEY=...
-# or load .env wholesale:
+# or load .env entirely:
 set -a; source .env; set +a
 ```
 
