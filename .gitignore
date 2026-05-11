@@ -149,3 +149,6 @@ __pycache__/
 .ruff_cache/
 .venv/
 venv/
+#data froms
+data/feedback.csv
+data/conversations.csv

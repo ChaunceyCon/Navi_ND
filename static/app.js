@@ -2,7 +2,13 @@
   'use strict';
 
   // ── State ──────────────────────────────────────────────────────────────────
-  let sessionId = null;
+  function newSessionId() {
+    if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+      return crypto.randomUUID();
+    }
+    return 'sid-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+  }
+  let sessionId = newSessionId();
   let isWaiting = false;
 
   // ── DOM refs ───────────────────────────────────────────────────────────────
@@ -79,7 +85,7 @@
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({session_id: sessionId}),
     });
-    sessionId = null;
+    sessionId = newSessionId();
     personaSentForSession = false;
     isWaiting = false;
     forcePromptOnce = true;
@@ -217,6 +223,95 @@
   });
 
   feedbackSkip.addEventListener('click', hideFeedbackBar);
+
+  // ── Feedback form modal ────────────────────────────────────────────────────
+  const btnFeedback     = document.getElementById('btn-feedback');
+  const fbOverlay       = document.getElementById('feedback-overlay');
+  const fbCloseBtn      = document.getElementById('feedback-close');
+  const fbCancelBtn     = document.getElementById('feedback-cancel');
+  const fbBackdrop      = fbOverlay.querySelector('.feedback-backdrop');
+  const fbForm          = document.getElementById('feedback-form');
+  const fbStars         = fbOverlay.querySelectorAll('.form-star-btn');
+  const fbCommentsInput = document.getElementById('feedback-comments');
+  const fbSuccessMsg    = document.getElementById('feedback-success');
+  const fbSubmitBtn     = document.getElementById('feedback-submit');
+  let fbRating = null;
+
+  function openFeedbackForm() {
+    resetFeedbackForm();
+    fbOverlay.classList.add('open');
+    fbOverlay.removeAttribute('hidden');
+  }
+  function closeFeedbackForm() {
+    fbOverlay.classList.remove('open');
+    fbOverlay.setAttribute('hidden', '');
+  }
+  function resetFeedbackForm() {
+    fbRating = null;
+    fbStars.forEach(s => s.classList.remove('active'));
+    fbForm.querySelectorAll('input[name="helpful"]').forEach(r => r.checked = false);
+    fbCommentsInput.value = '';
+    fbSuccessMsg.hidden = true;
+    fbSubmitBtn.disabled = false;
+    fbSubmitBtn.textContent = 'Send feedback';
+  }
+
+  fbStars.forEach(btn => {
+    btn.addEventListener('click', () => {
+      fbRating = parseInt(btn.dataset.val, 10);
+      fbStars.forEach((b, i) => b.classList.toggle('active', i < fbRating));
+    });
+  });
+
+  btnFeedback.addEventListener('click', openFeedbackForm);
+  fbCloseBtn.addEventListener('click', closeFeedbackForm);
+  fbCancelBtn.addEventListener('click', closeFeedbackForm);
+  fbBackdrop.addEventListener('click', closeFeedbackForm);
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && fbOverlay.classList.contains('open')) {
+      closeFeedbackForm();
+    }
+  });
+
+  fbForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const helpfulInput = fbForm.querySelector('input[name="helpful"]:checked');
+    const payload = {
+      session_id: sessionId,
+      rating: fbRating != null ? String(fbRating) : '',
+      helpful: helpfulInput ? helpfulInput.value : '',
+      comments: fbCommentsInput.value.trim(),
+    };
+
+    fbSubmitBtn.disabled = true;
+    fbSubmitBtn.textContent = 'Sending…';
+    try {
+      const res = await fetch('/feedback', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || data.error) {
+        fbSubmitBtn.disabled = false;
+        fbSubmitBtn.textContent = 'Send feedback';
+        fbSuccessMsg.textContent = data.error
+          ? `Could not send feedback: ${data.error}`
+          : 'Could not send feedback. Try again.';
+        fbSuccessMsg.hidden = false;
+        return;
+      }
+      fbSuccessMsg.textContent = 'Thanks — your feedback was sent.';
+      fbSuccessMsg.hidden = false;
+      setTimeout(closeFeedbackForm, 1200);
+    } catch (err) {
+      fbSubmitBtn.disabled = false;
+      fbSubmitBtn.textContent = 'Send feedback';
+      fbSuccessMsg.textContent = 'Could not reach the server. Try again.';
+      fbSuccessMsg.hidden = false;
+    }
+  });
 
   // ── Typing indicator ───────────────────────────────────────────────────────
   function showTyping() {

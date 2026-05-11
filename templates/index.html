@@ -284,6 +284,98 @@
       border-radius: var(--radius-sm);
     }
     .feedback-skip:hover { color: var(--color-text-muted); }
+
+    /* ── Feedback form modal ──────────────────────────── */
+    .feedback-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 450;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-4);
+    }
+    .feedback-overlay.open { display: flex; }
+    .feedback-backdrop {
+      position: absolute;
+      inset: 0;
+      background: oklch(0.1 0 0 / 0.5);
+      animation: fadeIn 0.2s ease;
+      cursor: pointer;
+    }
+    .feedback-panel {
+      position: relative;
+      width: 100%;
+      max-width: 520px;
+      max-height: calc(100dvh - var(--space-8));
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: introFadeUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .feedback-content {
+      padding: var(--space-5) var(--space-6);
+      overflow-y: auto;
+    }
+    .feedback-content h2 {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+    .feedback-content > p {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      line-height: 1.55;
+      margin-bottom: var(--space-4);
+    }
+    .feedback-form-stars {
+      display: flex;
+      gap: var(--space-1);
+      margin-top: var(--space-1);
+    }
+    .form-star-btn {
+      font-size: 1.6rem;
+      color: var(--color-text-faint);
+      padding: var(--space-1);
+      border-radius: var(--radius-sm);
+      transition: color var(--transition), transform var(--transition);
+    }
+    .form-star-btn:hover,
+    .form-star-btn.active { color: var(--color-gold, #d19900); }
+    .form-star-btn:active { transform: scale(0.92); }
+    .helpful-options {
+      display: flex;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+      margin-top: var(--space-1);
+    }
+    .helpful-options label {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      font-size: var(--text-sm);
+      color: var(--color-text);
+      cursor: pointer;
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-sm);
+    }
+    .helpful-options label:hover { background: var(--color-divider); }
+    .feedback-actions {
+      display: flex;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+    }
+    .feedback-actions .btn-save-persona { flex: 1; }
+    .feedback-success {
+      margin-top: var(--space-3);
+      font-size: var(--text-sm);
+      color: var(--color-primary);
+    }
   </style>
 </head>
 <body>
@@ -323,18 +415,6 @@
       <button class="btn-new-session" id="btn-new-session"
               title="Start a new session" aria-label="Start a new session">
         New session
-      </button>
-      <!-- Export PDF -->
-      <button class="btn-export" id="btn-export"
-              title="Export chat as PDF" aria-label="Export chat as PDF">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
-                stroke-linecap="round" stroke-linejoin="round"/>
-          <polyline points="7 10 12 15 17 10" stroke-linecap="round" stroke-linejoin="round"/>
-          <line x1="12" y1="15" x2="12" y2="3" stroke-linecap="round"/>
-        </svg>
-        Export PDF
       </button>
       <!-- Theme toggle -->
       <button class="btn-icon" id="theme-toggle"
@@ -461,8 +541,26 @@
         </svg>
       </button>
     </div>
-    <p class="input-hint">Press <kbd>Enter</kbd> to send · <kbd>Shift+Enter</kbd> for new line</p>
+    <div class="input-actions">
+      <button class="btn-export btn-export-compact" id="btn-export"
+              title="Export chat" aria-label="Export chat">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="7 10 12 15 17 10" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="12" y1="15" x2="12" y2="3" stroke-linecap="round"/>
+        </svg>
+        Export chat
+      </button>
+    </div>
   </footer>
+
+  <!-- Floating Feedback button (bottom-right) -->
+  <button class="btn-feedback-fab" id="btn-feedback"
+          title="Send detailed feedback" aria-label="Send detailed feedback">
+    Feedback
+  </button>
 
   <!-- Persona tab trigger -->
   <button class="persona-tab" id="persona-tab"
@@ -846,6 +944,67 @@ What does actual rest look like for you? Not what you think you should do — wh
   </div>
 </div>
 
+<!-- Feedback form modal -->
+<div class="feedback-overlay" id="feedback-overlay"
+     role="dialog" aria-modal="true" aria-labelledby="feedback-title" hidden>
+  <div class="feedback-backdrop" data-feedback-close></div>
+  <div class="feedback-panel" role="document">
+    <button class="intro-close" id="feedback-close" type="button"
+            aria-label="Close feedback form">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+    <div class="feedback-content">
+      <h2 id="feedback-title">Send feedback</h2>
+      <p>Tell us how this session went. Everything is optional and helps improve the coach.</p>
+      <form id="feedback-form" novalidate>
+        <div class="persona-field">
+          <label>Rating</label>
+          <div class="feedback-form-stars" role="group"
+               aria-label="Overall rating">
+            <button type="button" class="form-star-btn" data-val="1" aria-label="1 star">★</button>
+            <button type="button" class="form-star-btn" data-val="2" aria-label="2 stars">★</button>
+            <button type="button" class="form-star-btn" data-val="3" aria-label="3 stars">★</button>
+            <button type="button" class="form-star-btn" data-val="4" aria-label="4 stars">★</button>
+            <button type="button" class="form-star-btn" data-val="5" aria-label="5 stars">★</button>
+          </div>
+        </div>
+
+        <div class="persona-field">
+          <label>Was this helpful?</label>
+          <div class="helpful-options" role="radiogroup" aria-label="Was this helpful">
+            <label><input type="radio" name="helpful" value="yes"/> Yes</label>
+            <label><input type="radio" name="helpful" value="maybe"/> Somewhat</label>
+            <label><input type="radio" name="helpful" value="no"/> No</label>
+          </div>
+        </div>
+
+        <div class="persona-field">
+          <label for="feedback-comments">Comments</label>
+          <span class="field-hint">What worked, what didn't, what was missing — anything you'd like to share.</span>
+          <textarea id="feedback-comments" rows="4"
+                    placeholder="Optional comments…"></textarea>
+        </div>
+
+        <div class="feedback-actions">
+          <button type="submit" class="btn-save-persona" id="feedback-submit">
+            Send feedback
+          </button>
+          <button type="button" class="btn-skip-persona" id="feedback-cancel">
+            Cancel
+          </button>
+        </div>
+
+        <p class="feedback-success" id="feedback-success" hidden>
+          Thanks — your feedback was sent.
+        </p>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script src="{{ url_for('static', filename='app.js') }}" defer></script>
 <script>
   (function () {
@@ -868,12 +1027,12 @@ What does actual rest look like for you? Not what you think you should do — wh
     function closeOverlay() {
       overlay.classList.remove('open');
       overlay.setAttribute('hidden', '');
-      try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) { /* ignore */ }
+      try { sessionStorage.setItem(STORAGE_KEY, '1'); } catch (e) { /* ignore */ }
     }
 
-    // First-visit detection
+    // Per-tab detection: shows once per browser tab/session.
     var seen = null;
-    try { seen = localStorage.getItem(STORAGE_KEY); } catch (e) { /* ignore */ }
+    try { seen = sessionStorage.getItem(STORAGE_KEY); } catch (e) { /* ignore */ }
     if (!seen) openOverlay();
 
     if (helpBtn)  helpBtn.addEventListener('click', openOverlay);
