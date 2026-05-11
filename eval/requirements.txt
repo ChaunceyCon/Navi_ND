@@ -1,7 +1,0 @@
-# Claude Agent SDK + Anthropic client
-claude-agent-sdk>=0.1.0
-anthropic>=0.40.0
-
-# Evaluation dependencies (existing)
-# No external dependencies required for eval metrics.
-# All metrics and rubric scoring run with Python 3.10+ standard library.
