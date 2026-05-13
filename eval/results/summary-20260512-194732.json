@@ -1,0 +1,138 @@
+{
+  "timestamp": "20260512-194732",
+  "csv_path": "data\\conversations.csv",
+  "judges": [
+    "length_tally"
+  ],
+  "n_transcripts": 4,
+  "aggregates": {
+    "length_tally": {
+      "n_judgments": 4,
+      "n_null_scores": 0,
+      "n_numeric_scores": 4,
+      "mean_score": 8.5,
+      "min_score": 2,
+      "max_score": 16
+    }
+  },
+  "results": [
+    {
+      "score": 8,
+      "reasoning": "4 user turns (39 words), 4 agent turns (314 words).",
+      "score_type": "counts",
+      "judge_name": "length_tally",
+      "conversation_id": "2896869a-42aa-4d45-b283-b0983a554ea1",
+      "metadata": {
+        "n_user_turns": 4,
+        "n_agent_turns": 4,
+        "total_user_words": 39,
+        "total_agent_words": 314,
+        "total_user_chars": 196,
+        "total_agent_chars": 1703,
+        "mean_user_words_per_turn": 9.75,
+        "mean_agent_words_per_turn": 78.5,
+        "per_turn_user_words": [
+          18,
+          9,
+          9,
+          3
+        ],
+        "per_turn_agent_words": [
+          60,
+          102,
+          49,
+          103
+        ]
+      }
+    },
+    {
+      "score": 2,
+      "reasoning": "1 user turns (24 words), 1 agent turns (55 words).",
+      "score_type": "counts",
+      "judge_name": "length_tally",
+      "conversation_id": "2a25b2d9-2b2a-4fcb-9fcc-14c569820436",
+      "metadata": {
+        "n_user_turns": 1,
+        "n_agent_turns": 1,
+        "total_user_words": 24,
+        "total_agent_words": 55,
+        "total_user_chars": 124,
+        "total_agent_chars": 307,
+        "mean_user_words_per_turn": 24.0,
+        "mean_agent_words_per_turn": 55.0,
+        "per_turn_user_words": [
+          24
+        ],
+        "per_turn_agent_words": [
+          55
+        ]
+      }
+    },
+    {
+      "score": 16,
+      "reasoning": "8 user turns (284 words), 8 agent turns (1011 words).",
+      "score_type": "counts",
+      "judge_name": "length_tally",
+      "conversation_id": "5f3b6745-7834-4c38-8b7e-bbdbb296f386",
+      "metadata": {
+        "n_user_turns": 8,
+        "n_agent_turns": 8,
+        "total_user_words": 284,
+        "total_agent_words": 1011,
+        "total_user_chars": 1764,
+        "total_agent_chars": 5781,
+        "mean_user_words_per_turn": 35.5,
+        "mean_agent_words_per_turn": 126.375,
+        "per_turn_user_words": [
+          24,
+          182,
+          25,
+          12,
+          14,
+          8,
+          7,
+          12
+        ],
+        "per_turn_agent_words": [
+          59,
+          70,
+          68,
+          78,
+          207,
+          236,
+          97,
+          196
+        ]
+      }
+    },
+    {
+      "score": 8,
+      "reasoning": "4 user turns (53 words), 4 agent turns (181 words).",
+      "score_type": "counts",
+      "judge_name": "length_tally",
+      "conversation_id": "dd014a63-57b0-4297-97f4-16f26276e484",
+      "metadata": {
+        "n_user_turns": 4,
+        "n_agent_turns": 4,
+        "total_user_words": 53,
+        "total_agent_words": 181,
+        "total_user_chars": 269,
+        "total_agent_chars": 1011,
+        "mean_user_words_per_turn": 13.25,
+        "mean_agent_words_per_turn": 45.25,
+        "per_turn_user_words": [
+          18,
+          9,
+          17,
+          9
+        ],
+        "per_turn_agent_words": [
+          54,
+          37,
+          48,
+          42
+        ]
+      }
+    }
+  ]
+}

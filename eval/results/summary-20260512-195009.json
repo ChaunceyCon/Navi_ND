@@ -1,0 +1,535 @@
+{
+  "timestamp": "20260512-195009",
+  "csv_path": "data\\conversations.csv",
+  "judges": [
+    "length_tally",
+    "mode_detection_latency",
+    "context_questions"
+  ],
+  "n_transcripts": 4,
+  "aggregates": {
+    "length_tally": {
+      "n_judgments": 4,
+      "n_null_scores": 0,
+      "n_numeric_scores": 4,
+      "mean_score": 8.5,
+      "min_score": 2,
+      "max_score": 16
+    },
+    "mode_detection_latency": {
+      "n_judgments": 4,
+      "n_null_scores": 0,
+      "n_numeric_scores": 4,
+      "mean_score": 0.0,
+      "min_score": 0,
+      "max_score": 0
+    },
+    "context_questions": {
+      "n_judgments": 4,
+      "n_null_scores": 0,
+      "n_numeric_scores": 4,
+      "mean_score": 6.25,
+      "min_score": 2,
+      "max_score": 11
+    }
+  },
+  "results": [
+    {
+      "score": 8,
+      "reasoning": "4 user turns (39 words), 4 agent turns (314 words).",
+      "score_type": "counts",
+      "judge_name": "length_tally",
+      "conversation_id": "2896869a-42aa-4d45-b283-b0983a554ea1",
+      "metadata": {
+        "n_user_turns": 4,
+        "n_agent_turns": 4,
+        "total_user_words": 39,
+        "total_agent_words": 314,
+        "total_user_chars": 196,
+        "total_agent_chars": 1703,
+        "mean_user_words_per_turn": 9.75,
+        "mean_agent_words_per_turn": 78.5,
+        "per_turn_user_words": [
+          18,
+          9,
+          9,
+          3
+        ],
+        "per_turn_agent_words": [
+          60,
+          102,
+          49,
+          103
+        ]
+      }
+    },
+    {
+      "score": 0,
+      "reasoning": "Latency to adaptation>=4: 0 of 4 agent turns. Primary mode: burnout. Avg adaptation: 3.50.",
+      "score_type": "latency_turns",
+      "judge_name": "mode_detection_latency",
+      "conversation_id": "2896869a-42aa-4d45-b283-b0983a554ea1",
+      "metadata": {
+        "per_turn": [
+          {
+            "agent_turn_idx": 0,
+            "user_mode": "burnout",
+            "adaptation_score": 4,
+            "adaptation_reasoning": "The agent correctly sensed the user's low-energy, depleted state and responded with a validating, low-pressure tone, though asking a two-part clarifying question adds slight cognitive load for someone in burnout."
+          },
+          {
+            "agent_turn_idx": 1,
+            "user_mode": "burnout",
+            "adaptation_score": 3,
+            "adaptation_reasoning": "The agent acknowledged the dual-front struggle but then pivoted to a reflective question asking the user to recall a past success, which requires more cognitive effort than a burnout user can easily muster."
+          },
+          {
+            "agent_turn_idx": 2,
+            "user_mode": "burnout",
+            "adaptation_score": 4,
+            "adaptation_reasoning": "The agent kept the response brief and used a gentle clarifying question to disambiguate the user's vague input, which is appropriate for a low-energy user, though slightly more warmth toward the exhaustion signal could have helped."
+          },
+          {
+            "agent_turn_idx": 3,
+            "user_mode": "burnout",
+            "adaptation_score": 3,
+            "adaptation_reasoning": "The agent validated the user's exhaustion well and asked a meaningful question, but inserting a disclaimer about being an AI mid-conversation disrupts the empathic momentum and adds unnecessary cognitive noise for a burned-out user."
+          }
+        ],
+        "primary_user_mode": "burnout",
+        "avg_adaptation_score": 3.5,
+        "adaptation_threshold": 4,
+        "mode_enum": [
+          "burnout",
+          "confused",
+          "engaged",
+          "shutdown",
+          "anxious"
+        ],
+        "n_agent_turns": 4
+      }
+    },
+    {
+      "score": 5,
+      "reasoning": "5 user-context, 0 task-context, 0 other; 5 total.",
+      "score_type": "counts",
+      "judge_name": "context_questions",
+      "conversation_id": "2896869a-42aa-4d45-b283-b0983a554ea1",
+      "metadata": {
+        "n_user_context_questions": 5,
+        "n_task_context_questions": 0,
+        "n_other_questions": 0,
+        "first_user_context_question_turn": 0,
+        "first_task_context_question_turn": null,
+        "questions": [
+          {
+            "agent_turn_idx": 0,
+            "question": "Is this more about the assignment itself feeling meaningless to you, or more about your engine just not turning over right now \u2014 like the motivation isn't showing up regardless of what the task is?",
+            "category": "user_context"
+          },
+          {
+            "agent_turn_idx": 1,
+            "question": "has there been a time recently \u2014 even on something small \u2014 where you got started on something despite not wanting to?",
+            "category": "user_context"
+          },
+          {
+            "agent_turn_idx": 1,
+            "question": "What was different about that situation?",
+            "category": "user_context"
+          },
+          {
+            "agent_turn_idx": 2,
+            "question": "Is there something specific about the hectic schedule you're trying to figure out right now \u2014 like a particular day or task that's not fitting \u2014 or is it more that the pace itself is wearing on you?",
+            "category": "user_context"
+          },
+          {
+            "agent_turn_idx": 3,
+            "question": "When was the last time you had even a few hours where you weren't managing, performing, or catching up on something?",
+            "category": "user_context"
+          }
+        ]
+      }
+    },
+    {
+      "score": 2,
+      "reasoning": "1 user turns (24 words), 1 agent turns (55 words).",
+      "score_type": "counts",
+      "judge_name": "length_tally",
+      "conversation_id": "2a25b2d9-2b2a-4fcb-9fcc-14c569820436",
+      "metadata": {
+        "n_user_turns": 1,
+        "n_agent_turns": 1,
+        "total_user_words": 24,
+        "total_agent_words": 55,
+        "total_user_chars": 124,
+        "total_agent_chars": 307,
+        "mean_user_words_per_turn": 24.0,
+        "mean_agent_words_per_turn": 55.0,
+        "per_turn_user_words": [
+          24
+        ],
+        "per_turn_agent_words": [
+          55
+        ]
+      }
+    },
+    {
+      "score": 0,
+      "reasoning": "Latency to adaptation>=4: 0 of 1 agent turns. Primary mode: confused. Avg adaptation: 5.00.",
+      "score_type": "latency_turns",
+      "judge_name": "mode_detection_latency",
+      "conversation_id": "2a25b2d9-2b2a-4fcb-9fcc-14c569820436",
+      "metadata": {
+        "per_turn": [
+          {
+            "agent_turn_idx": 0,
+            "user_mode": "confused",
+            "adaptation_score": 5,
+            "adaptation_reasoning": "The agent correctly identified the user's confusion, validated their frustration without overwhelming them, and asked a focused clarifying question to pinpoint exactly where the confusion lies, perfectly matching the tone and approach needed for a confused user."
+          }
+        ],
+        "primary_user_mode": "confused",
+        "avg_adaptation_score": 5.0,
+        "adaptation_threshold": 4,
+        "mode_enum": [
+          "burnout",
+          "confused",
+          "engaged",
+          "shutdown",
+          "anxious"
+        ],
+        "n_agent_turns": 1
+      }
+    },
+    {
+      "score": 2,
+      "reasoning": "0 user-context, 2 task-context, 0 other; 2 total.",
+      "score_type": "counts",
+      "judge_name": "context_questions",
+      "conversation_id": "2a25b2d9-2b2a-4fcb-9fcc-14c569820436",
+      "metadata": {
+        "n_user_context_questions": 0,
+        "n_task_context_questions": 2,
+        "n_other_questions": 0,
+        "first_user_context_question_turn": null,
+        "first_task_context_question_turn": 0,
+        "questions": [
+          {
+            "agent_turn_idx": 0,
+            "question": "What's the specific part of the prompt that your brain keeps bouncing off of?",
+            "category": "task_context"
+          },
+          {
+            "agent_turn_idx": 0,
+            "question": "Is it a particular sentence, a word, or just the whole thing feeling slippery?",
+            "category": "task_context"
+          }
+        ]
+      }
+    },
+    {
+      "score": 16,
+      "reasoning": "8 user turns (284 words), 8 agent turns (1011 words).",
+      "score_type": "counts",
+      "judge_name": "length_tally",
+      "conversation_id": "5f3b6745-7834-4c38-8b7e-bbdbb296f386",
+      "metadata": {
+        "n_user_turns": 8,
+        "n_agent_turns": 8,
+        "total_user_words": 284,
+        "total_agent_words": 1011,
+        "total_user_chars": 1764,
+        "total_agent_chars": 5781,
+        "mean_user_words_per_turn": 35.5,
+        "mean_agent_words_per_turn": 126.375,
+        "per_turn_user_words": [
+          24,
+          182,
+          25,
+          12,
+          14,
+          8,
+          7,
+          12
+        ],
+        "per_turn_agent_words": [
+          59,
+          70,
+          68,
+          78,
+          207,
+          236,
+          97,
+          196
+        ]
+      }
+    },
+    {
+      "score": 0,
+      "reasoning": "Latency to adaptation>=4: 0 of 8 agent turns. Primary mode: engaged. Avg adaptation: 4.25.",
+      "score_type": "latency_turns",
+      "judge_name": "mode_detection_latency",
+      "conversation_id": "5f3b6745-7834-4c38-8b7e-bbdbb296f386",
+      "metadata": {
+        "per_turn": [
+          {
+            "agent_turn_idx": 0,
+            "user_mode": "confused",
+            "adaptation_score": 5,
+            "adaptation_reasoning": "The agent correctly identified the user's confusion, validated it without over-explaining, and immediately asked a targeted diagnostic question to locate exactly where the confusion sits."
+          },
+          {
+            "agent_turn_idx": 1,
+            "user_mode": "confused",
+            "adaptation_score": 5,
+            "adaptation_reasoning": "Rather than diving into a full explanation of dense technical content, the agent wisely checked the user's baseline understanding first, which is the right move when the source of confusion is unclear."
+          },
+          {
+            "agent_turn_idx": 2,
+            "user_mode": "anxious",
+            "adaptation_score": 4,
+            "adaptation_reasoning": "The agent correctly reframed the problem as a volume/format issue rather than a knowledge gap, and asked a useful clarifying question, though it could have done slightly more to acknowledge the overwhelm before pivoting to problem-solving."
+          },
+          {
+            "agent_turn_idx": 3,
+            "user_mode": "anxious",
+            "adaptation_score": 4,
+            "adaptation_reasoning": "The agent acknowledged the user's stated need and asked practical context-setting questions to personalize the approach, which is appropriate for an anxious user who needs structure, though the three-question volley is slightly dense."
+          },
+          {
+            "agent_turn_idx": 4,
+            "user_mode": "engaged",
+            "adaptation_score": 5,
+            "adaptation_reasoning": "With the user reporting good energy and solid conditions, the agent matched that readiness with concrete, actionable strategies and ended with a clear decision prompt to maintain forward momentum."
+          },
+          {
+            "agent_turn_idx": 5,
+            "user_mode": "engaged",
+            "adaptation_score": 2,
+            "adaptation_reasoning": "The agent misread the user's direct and enthusiastic selection of two strategies as a misunderstanding, then pivoted to decoding the prompt instead of helping the user act on what they had just chosen, which ignored the user's expressed readiness and disrupted momentum."
+          },
+          {
+            "agent_turn_idx": 6,
+            "user_mode": "engaged",
+            "adaptation_score": 4,
+            "adaptation_reasoning": "The agent delivered a clean, actionable summary that reframes the assignment into two discrete deliverables and gives a sensible starting heuristic, well-matched to an engaged user ready to begin."
+          },
+          {
+            "agent_turn_idx": 7,
+            "user_mode": "engaged",
+            "adaptation_score": 5,
+            "adaptation_reasoning": "The agent validated the idea immediately, gave a specific, copy-paste-ready prompt the user could act on in the next minute, and closed with an open door for follow-up, perfectly matching the user's engaged, action-ready state."
+          }
+        ],
+        "primary_user_mode": "engaged",
+        "avg_adaptation_score": 4.25,
+        "adaptation_threshold": 4,
+        "mode_enum": [
+          "burnout",
+          "confused",
+          "engaged",
+          "shutdown",
+          "anxious"
+        ],
+        "n_agent_turns": 8
+      }
+    },
+    {
+      "score": 11,
+      "reasoning": "4 user-context, 5 task-context, 2 other; 11 total.",
+      "score_type": "counts",
+      "judge_name": "context_questions",
+      "conversation_id": "5f3b6745-7834-4c38-8b7e-bbdbb296f386",
+      "metadata": {
+        "n_user_context_questions": 4,
+        "n_task_context_questions": 5,
+        "n_other_questions": 2,
+        "first_user_context_question_turn": 2,
+        "first_task_context_question_turn": 0,
+        "questions": [
+          {
+            "agent_turn_idx": 0,
+            "question": "What's the specific part of the prompt that stops you?",
+            "category": "task_context"
+          },
+          {
+            "agent_turn_idx": 0,
+            "question": "Is it a particular sentence, a phrase that seems vague, or more like you understand the individual words but not what they add up to?",
+            "category": "task_context"
+          },
+          {
+            "agent_turn_idx": 1,
+            "question": "What's your current understanding of what they're asking you to build overall?",
+            "category": "task_context"
+          },
+          {
+            "agent_turn_idx": 2,
+            "question": "Is this more about needing help breaking down what the assignment is actually asking for, or do you already know what to do and just need a way to approach it that doesn't feel like everything at once?",
+            "category": "user_context"
+          },
+          {
+            "agent_turn_idx": 3,
+            "question": "Where are you working (dorm, library, home)?",
+            "category": "user_context"
+          },
+          {
+            "agent_turn_idx": 3,
+            "question": "What's your energy like right now \u2014 running on empty, or do you have something in the tank?",
+            "category": "user_context"
+          },
+          {
+            "agent_turn_idx": 3,
+            "question": "How much time do you have before this needs to be done?",
+            "category": "task_context"
+          },
+          {
+            "agent_turn_idx": 4,
+            "question": "Which of these sounds most like something you'd actually do in the next 20 minutes?",
+            "category": "user_context"
+          },
+          {
+            "agent_turn_idx": 5,
+            "question": "Does that make the overall shape clearer?",
+            "category": "other"
+          },
+          {
+            "agent_turn_idx": 5,
+            "question": "Or is there a specific piece \u2014 like what \"ACID-compliant\" actually means in practice \u2014 where you're still stuck?",
+            "category": "task_context"
+          },
+          {
+            "agent_turn_idx": 6,
+            "question": "Does that land, or does something still feel off about what you're supposed to actually turn in?",
+            "category": "other"
+          }
+        ]
+      }
+    },
+    {
+      "score": 8,
+      "reasoning": "4 user turns (53 words), 4 agent turns (181 words).",
+      "score_type": "counts",
+      "judge_name": "length_tally",
+      "conversation_id": "dd014a63-57b0-4297-97f4-16f26276e484",
+      "metadata": {
+        "n_user_turns": 4,
+        "n_agent_turns": 4,
+        "total_user_words": 53,
+        "total_agent_words": 181,
+        "total_user_chars": 269,
+        "total_agent_chars": 1011,
+        "mean_user_words_per_turn": 13.25,
+        "mean_agent_words_per_turn": 45.25,
+        "per_turn_user_words": [
+          18,
+          9,
+          17,
+          9
+        ],
+        "per_turn_agent_words": [
+          54,
+          37,
+          48,
+          42
+        ]
+      }
+    },
+    {
+      "score": 0,
+      "reasoning": "Latency to adaptation>=4: 0 of 4 agent turns. Primary mode: confused. Avg adaptation: 3.75.",
+      "score_type": "latency_turns",
+      "judge_name": "mode_detection_latency",
+      "conversation_id": "dd014a63-57b0-4297-97f4-16f26276e484",
+      "metadata": {
+        "per_turn": [
+          {
+            "agent_turn_idx": 0,
+            "user_mode": "burnout",
+            "adaptation_score": 4,
+            "adaptation_reasoning": "The agent correctly identified the 'stuck' quality and validated it without pushing too hard, but the follow-up question offered two options in a way that slightly over-intellectualized what the user expressed as emotional flatness rather than a diagnostic puzzle."
+          },
+          {
+            "agent_turn_idx": 1,
+            "user_mode": "confused",
+            "adaptation_score": 4,
+            "adaptation_reasoning": "The agent pivoted well to a clarifying, practical mode and broke down possible sources of confusion, which matches the user signaling they need help understanding how to proceed."
+          },
+          {
+            "agent_turn_idx": 2,
+            "user_mode": "confused",
+            "adaptation_score": 3,
+            "adaptation_reasoning": "The agent asked for clarification about the assignment itself rather than directly addressing the user's stated need around scheduling and motivation, missing the key signal that the user wants help with planning and initiation, not task definition."
+          },
+          {
+            "agent_turn_idx": 3,
+            "user_mode": "engaged",
+            "adaptation_score": 4,
+            "adaptation_reasoning": "The agent appropriately moved toward practical planning by asking about workspace and energy level, which suits an engaged user ready to problem-solve, though the response could have offered slightly more structure to fully capitalize on the user's forward momentum."
+          }
+        ],
+        "primary_user_mode": "confused",
+        "avg_adaptation_score": 3.75,
+        "adaptation_threshold": 4,
+        "mode_enum": [
+          "burnout",
+          "confused",
+          "engaged",
+          "shutdown",
+          "anxious"
+        ],
+        "n_agent_turns": 4
+      }
+    },
+    {
+      "score": 7,
+      "reasoning": "4 user-context, 3 task-context, 0 other; 7 total.",
+      "score_type": "counts",
+      "judge_name": "context_questions",
+      "conversation_id": "dd014a63-57b0-4297-97f4-16f26276e484",
+      "metadata": {
+        "n_user_context_questions": 4,
+        "n_task_context_questions": 3,
+        "n_other_questions": 0,
+        "first_user_context_question_turn": 0,
+        "first_task_context_question_turn": 1,
+        "questions": [
+          {
+            "agent_turn_idx": 0,
+            "question": "Is this more about not understanding what the assignment actually wants from you, or more about having zero motivation to care about it right now?",
+            "category": "user_context"
+          },
+          {
+            "agent_turn_idx": 1,
+            "question": "What's the specific part that's stopping you first?",
+            "category": "user_context"
+          },
+          {
+            "agent_turn_idx": 1,
+            "question": "Is it the instructions themselves, what format they want, how to even begin, or something else?",
+            "category": "task_context"
+          },
+          {
+            "agent_turn_idx": 2,
+            "question": "what's the \"it\" you're working on?",
+            "category": "task_context"
+          },
+          {
+            "agent_turn_idx": 2,
+            "question": "do you have a sense of when it needs to be done by?",
+            "category": "task_context"
+          },
+          {
+            "agent_turn_idx": 3,
+            "question": "where are you most likely to actually sit down and work on this?",
+            "category": "user_context"
+          },
+          {
+            "agent_turn_idx": 3,
+            "question": "how's your energy right now \u2014 running on empty, or do you have something in the tank?",
+            "category": "user_context"
+          }
+        ]
+      }
+    }
+  ]
+}
