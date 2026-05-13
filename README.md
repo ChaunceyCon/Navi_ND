@@ -6,6 +6,14 @@ The agent acts as a collaborative thought partner — warm, specific, and non-pa
 
 ***
 
+### Colab Evaluation Notebook
+
+An interactive Google Colab version of the evaluation workflow is available here:
+
+- [Team 4 Final Project Evaluation of agent.ipynb](https://colab.research.google.com/drive/1Zfl4I5rku0SzwkfmkTMWNQqsGry6Ryoj?usp=sharing)
+
+This notebook demonstrates the evaluation pipeline, scoring workflow, and example outputs used during final project testing.
+
 ## What This Agent Does
 
 - **Decodes confusing academic situations** — assignment prompts, rubric language, professor feedback, and socially demanding events like presentations or advisor meetings
